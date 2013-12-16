@@ -1,0 +1,99 @@
+﻿<?xml version="1.0"?>
+<!--
+  For more information on how to configure your ASP.NET application, please visit
+  http://go.microsoft.com/fwlink/?LinkId=169433
+  -->
+<configuration>
+  <configSections>
+    <section name="system.identityModel" type="System.IdentityModel.Configuration.SystemIdentityModelSection, System.IdentityModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089" />
+    <section name="system.identityModel.services" type="System.IdentityModel.Services.Configuration.SystemIdentityModelServicesSection, System.IdentityModel.Services, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089" />
+  </configSections>
+  <appSettings>
+    <add key="webpages:Version" value="2.0.0.0" />
+    <add key="webpages:Enabled" value="false" />
+    <add key="PreserveLoginUrl" value="true" />
+    <add key="ClientValidationEnabled" value="true" />
+    <add key="UnobtrusiveJavaScriptEnabled" value="true" />
+    <add key="ida:FederationMetadataLocation" value="https://login.windows.net/3be8553b-99f9-4bc6-88b7-e4c08bdde26f/FederationMetadata/2007-06/FederationMetadata.xml" />
+    <add key="ida:Issuer" value="https://login.windows.net/3be8553b-99f9-4bc6-88b7-e4c08bdde26f/wsfed" />
+    <add key="ida:ProviderSelection" value="productionSTS" />
+    <add key="ida:EnforceIssuerValidation" value="false" />
+  </appSettings>
+  <!--
+    For a description of web.config changes for .NET 4.5 see http://go.microsoft.com/fwlink/?LinkId=235367.
+
+    The following attributes can be set on the <httpRuntime> tag.
+      <system.Web>
+        <httpRuntime targetFramework="4.5" />
+      </system.Web>
+  -->
+  <location path="FederationMetadata">
+    <system.web>
+      <authorization>
+        <allow users="*" />
+      </authorization>
+    </system.web>
+  </location>
+  <system.web>
+    <authorization>
+      <deny users="?" />
+    </authorization>
+    <!--Commented by Identity and Access VS Package-->
+    <!--<authorization><!- -<deny users="?" />- -></authorization>-->
+    <!--Commented by Identity and Access VS Package-->
+    <!--<authorization><!- -<deny users="?" />- -></authorization>-->
+    <authentication mode="None" />
+    <compilation debug="true" targetFramework="4.5" />
+    <pages controlRenderingCompatibilityVersion="4.0">
+      <namespaces>
+        <add namespace="System.Web.Helpers" />
+        <add namespace="System.Web.Mvc" />
+        <add namespace="System.Web.Mvc.Ajax" />
+        <add namespace="System.Web.Mvc.Html" />
+        <add namespace="System.Web.Routing" />
+        <add namespace="System.Web.WebPages" />
+      </namespaces>
+    </pages>
+    <httpRuntime requestValidationMode="4.5" />
+  </system.web>
+  <system.webServer>
+    <validation validateIntegratedModeConfiguration="false" />
+    <modules runAllManagedModulesForAllRequests="true">
+      <remove name="FormsAuthentication" />
+      <add name="WSFederationAuthenticationModule" type="System.IdentityModel.Services.WSFederationAuthenticationModule, System.IdentityModel.Services, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" preCondition="managedHandler" />
+      <add name="SessionAuthenticationModule" type="System.IdentityModel.Services.SessionAuthenticationModule, System.IdentityModel.Services, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" preCondition="managedHandler" />
+    </modules>
+    <handlers>
+      <remove name="ExtensionlessUrlHandler-ISAPI-4.0_32bit" />
+      <remove name="ExtensionlessUrlHandler-ISAPI-4.0_64bit" />
+      <remove name="ExtensionlessUrlHandler-Integrated-4.0" />
+      <add name="ExtensionlessUrlHandler-ISAPI-4.0_32bit" path="*." verb="GET,HEAD,POST,DEBUG,PUT,DELETE,PATCH,OPTIONS" modules="IsapiModule" scriptProcessor="%windir%\Microsoft.NET\Framework\v4.0.30319\aspnet_isapi.dll" preCondition="classicMode,runtimeVersionv4.0,bitness32" responseBufferLimit="0" />
+      <add name="ExtensionlessUrlHandler-ISAPI-4.0_64bit" path="*." verb="GET,HEAD,POST,DEBUG,PUT,DELETE,PATCH,OPTIONS" modules="IsapiModule" scriptProcessor="%windir%\Microsoft.NET\Framework64\v4.0.30319\aspnet_isapi.dll" preCondition="classicMode,runtimeVersionv4.0,bitness64" responseBufferLimit="0" />
+      <add name="ExtensionlessUrlHandler-Integrated-4.0" path="*." verb="GET,HEAD,POST,DEBUG,PUT,DELETE,PATCH,OPTIONS" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0" />
+    </handlers>
+  </system.webServer>
+  <system.identityModel>
+    <identityConfiguration>
+      <audienceUris>
+        <add value="http://localhost/ContentManagementSystem/" />
+      </audienceUris>
+      <!--Commented by Identity and Access VS Package-->
+      <!--<issuerNameRegistry type="System.IdentityModel.Tokens.ValidatingIssuerNameRegistry, System.IdentityModel.Tokens.ValidatingIssuerNameRegistry"><authority name="https://contentmanagement.accesscontrol.windows.net/"><keys><add thumbprint="E3E13455D0F08348323494091D3E794AD77ECE70" /></keys><validIssuers><add name="https://contentmanagement.accesscontrol.windows.net/" /></validIssuers></authority></issuerNameRegistry>-->
+      <!--certificationValidationMode set to "None" by the the Identity and Access Tool for Visual Studio. For development purposes.-->
+      <certificateValidation certificateValidationMode="None" />
+      <!--Commented by Identity and Access VS Package-->
+      <!--<issuerNameRegistry type="System.IdentityModel.Tokens.ValidatingIssuerNameRegistry, System.IdentityModel.Tokens.ValidatingIssuerNameRegistry"><authority name="https://sts.windows.net/3be8553b-99f9-4bc6-88b7-e4c08bdde26f/"><keys><add thumbprint="3464C5BDD2BE7F2B6112E2F08E9C0024E33D9FE0" /></keys><validIssuers><add name="https://sts.windows.net/3be8553b-99f9-4bc6-88b7-e4c08bdde26f/" /></validIssuers></authority></issuerNameRegistry>-->
+      <issuerNameRegistry type="System.IdentityModel.Tokens.ConfigurationBasedIssuerNameRegistry, System.IdentityModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+        <trustedIssuers>
+          <add thumbprint="3464C5BDD2BE7F2B6112E2F08E9C0024E33D9FE0" name="https://sts.windows.net/3be8553b-99f9-4bc6-88b7-e4c08bdde26f/" />
+        </trustedIssuers>
+      </issuerNameRegistry>
+    </identityConfiguration>
+  </system.identityModel>
+  <system.identityModel.services>
+    <federationConfiguration>
+      <cookieHandler requireSsl="false" />
+      <wsFederation passiveRedirectEnabled="true" issuer="https://login.windows.net/3be8553b-99f9-4bc6-88b7-e4c08bdde26f/wsfed" realm="http://localhost/ContentManagementSystem/" requireHttps="false" />
+    </federationConfiguration>
+  </system.identityModel.services>
+</configuration>
